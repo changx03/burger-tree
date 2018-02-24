@@ -24,17 +24,19 @@ export default class BurgerBuilder extends Component {
     return (
       <React.Fragment>
         <Burger ingredients={this.state.ingredients}/>
+        <p>{`Total cose: $${this.state.totalPrice.toFixed(2)}`}</p>
         <BuildControls 
           onAdd={this._addIngredientHandler}
+          onRemove={this._removeIngredientHandler}
+          ingredients={this.state.ingredients}
         />
       </React.Fragment>
     );
   }
 
   _addIngredientHandler = type => {
-    console.log(type);
     const updatedIngredients = { ...this.state.ingredients };
-    updatedIngredients[type] += 1;
+    updatedIngredients[type]++;
     const updatedPrice = this.state.totalPrice + INGREDIENT_PRICES[type];
     console.log(updatedIngredients);
     this.setState({
@@ -44,6 +46,16 @@ export default class BurgerBuilder extends Component {
   }
 
   _removeIngredientHandler = type => {
-
+    const updatedIngredients = { ...this.state.ingredients };
+    let updatedPrice = this.state.totalPrice;
+    if (updatedIngredients[type] > 0) {
+      updatedIngredients[type]--;
+      updatedPrice -= INGREDIENT_PRICES[type];
+    }
+    console.log(updatedIngredients);
+    this.setState({
+      ingredients: updatedIngredients,
+      totalPrice: updatedPrice,
+    });
   }
 }
