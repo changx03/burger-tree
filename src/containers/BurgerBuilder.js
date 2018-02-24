@@ -24,11 +24,12 @@ export default class BurgerBuilder extends Component {
     return (
       <React.Fragment>
         <Burger ingredients={this.state.ingredients}/>
-        <p>{`Total cose: $${this.state.totalPrice.toFixed(2)}`}</p>
         <BuildControls 
           onAdd={this._addIngredientHandler}
           onRemove={this._removeIngredientHandler}
           ingredients={this.state.ingredients}
+          totalPrice={this.state.totalPrice}
+          disableOrderBtn={this.state.totalPrice === 4}
         />
       </React.Fragment>
     );
