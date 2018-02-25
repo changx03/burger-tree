@@ -13,7 +13,7 @@ const burger = props => {
     return igBuffer;
   }).reduce((accumulator, current) => [...accumulator, ...current], []);
   // same as [...accumulator, ...current] = accumulator.concat(current)
-  console.log(burgerIngredients);
+  // console.log(burgerIngredients);
 
 
   return (

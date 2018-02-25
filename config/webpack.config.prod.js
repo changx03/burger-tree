@@ -184,7 +184,7 @@ module.exports = {
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
                         modules: true,
-                        localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                        localIdentName: '[name]_[local]-[hash:base64:5]',
                       },
                     },
                     {

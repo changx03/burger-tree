@@ -1,10 +1,12 @@
 import React from 'react';
 import styledClasses from './Layout.css';
+import Toolbar from './Navigation/Toolbar/Toolbar';
 
 const layout = props => {
+  // TODO: SideDrawer
   return (
     <React.Fragment>
-      <div>Toolbar, SideDrawer, Backdrop</div>
+      <Toolbar />
       <main className={styledClasses.Content}>
         {props.children}
       </main>

@@ -20,21 +20,28 @@ export default class BurgerBuilder extends Component {
       meat: 0,
     },
     totalPrice: 4, // base price
+    showPurchaseModal: false,
   };
 
   render() {
     return (
       <React.Fragment>
-        <Modal>
-          <OrderSummary ingredients={this.state.ingredients} />
+        <Modal show={this.state.showPurchaseModal} onDismiss={this._onDismissPurchaseModal}>
+          <OrderSummary 
+            ingredients={this.state.ingredients} 
+            onCancel={this._onDismissPurchaseModal}
+            onContinue={this._onContinuePurchase}
+            totalPrice={this.state.totalPrice.toFixed(2)}
+          />
         </Modal>
         <Burger ingredients={this.state.ingredients}/>
         <BuildControls 
           onAdd={this._addIngredientHandler}
           onRemove={this._removeIngredientHandler}
           ingredients={this.state.ingredients}
-          totalPrice={this.state.totalPrice}
+          totalPrice={this.state.totalPrice.toFixed(2)}
           disableOrderBtn={this.state.totalPrice === 4}
+          onOrderClick={this._orderHandler}
         />
       </React.Fragment>
     );
@@ -44,7 +51,7 @@ export default class BurgerBuilder extends Component {
     const updatedIngredients = { ...this.state.ingredients };
     updatedIngredients[type]++;
     const updatedPrice = this.state.totalPrice + INGREDIENT_PRICES[type];
-    console.log(updatedIngredients);
+    // console.log(updatedIngredients);
     this.setState({
       ingredients: updatedIngredients,
       totalPrice: updatedPrice,
@@ -58,10 +65,26 @@ export default class BurgerBuilder extends Component {
       updatedIngredients[type]--;
       updatedPrice -= INGREDIENT_PRICES[type];
     }
-    console.log(updatedIngredients);
+    // console.log(updatedIngredients);
     this.setState({
       ingredients: updatedIngredients,
       totalPrice: updatedPrice,
     });
+  }
+
+  _orderHandler = () => {
+    this.setState({
+      showPurchaseModal: true,
+    });
+  }
+
+  _onDismissPurchaseModal = () => {
+    this.setState({
+      showPurchaseModal: false,
+    });
+  }
+
+  _onContinuePurchase = () => {
+    alert('_onContinuePurchase');
   }
 }
