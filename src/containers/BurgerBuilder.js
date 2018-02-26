@@ -23,6 +23,8 @@ export default class BurgerBuilder extends Component {
     showPurchaseModal: false,
   };
 
+  // When Modal shouldComponentUpdate returns false, it will stop all children from rerendering.
+  // Returning false does not prevent child components from re-rendering when their state changes
   render() {
     return (
       <React.Fragment>
