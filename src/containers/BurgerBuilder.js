@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import Burger from '../components/Burger/Burger';
+import axios from '../axios-orders';
 import BuildControls from '../components/Burger/BuildControls';
+import Burger from '../components/Burger/Burger';
 import Modal from '../components/UI/Modal/Modal';
 import OrderSummary from '../components/Burger/OrderSummary';
+import Spinner from '../components/UI/Spinner';
 
 const INGREDIENT_PRICES = {
   salad: 0.7,
@@ -21,23 +23,34 @@ export default class BurgerBuilder extends Component {
     },
     totalPrice: 4, // base price
     showPurchaseModal: false,
+    loading: false,
   };
 
   // When Modal shouldComponentUpdate returns false, it will stop all children from rerendering.
   // Returning false does not prevent child components from re-rendering when their state changes
   render() {
+    let orderSummary = (
+      <OrderSummary
+        ingredients={this.state.ingredients}
+        onCancel={this._onDismissPurchaseModal}
+        onContinue={this._onContinuePurchase}
+        totalPrice={this.state.totalPrice.toFixed(2)}
+      />
+    );
+    if (this.state.loading) {
+      orderSummary = <Spinner />;
+    }
+
     return (
       <React.Fragment>
-        <Modal show={this.state.showPurchaseModal} onDismiss={this._onDismissPurchaseModal}>
-          <OrderSummary 
-            ingredients={this.state.ingredients} 
-            onCancel={this._onDismissPurchaseModal}
-            onContinue={this._onContinuePurchase}
-            totalPrice={this.state.totalPrice.toFixed(2)}
-          />
+        <Modal
+          show={this.state.showPurchaseModal}
+          onDismiss={this._onDismissPurchaseModal}
+        >
+          {orderSummary}
         </Modal>
-        <Burger ingredients={this.state.ingredients}/>
-        <BuildControls 
+        <Burger ingredients={this.state.ingredients} />
+        <BuildControls
           onAdd={this._addIngredientHandler}
           onRemove={this._removeIngredientHandler}
           ingredients={this.state.ingredients}
@@ -58,7 +71,7 @@ export default class BurgerBuilder extends Component {
       ingredients: updatedIngredients,
       totalPrice: updatedPrice,
     });
-  }
+  };
 
   _removeIngredientHandler = type => {
     const updatedIngredients = { ...this.state.ingredients };
@@ -72,21 +85,52 @@ export default class BurgerBuilder extends Component {
       ingredients: updatedIngredients,
       totalPrice: updatedPrice,
     });
-  }
+  };
 
   _orderHandler = () => {
     this.setState({
       showPurchaseModal: true,
     });
-  }
+  };
 
   _onDismissPurchaseModal = () => {
     this.setState({
       showPurchaseModal: false,
     });
-  }
+  };
 
   _onContinuePurchase = () => {
-    alert('_onContinuePurchase');
-  }
+    // alert('_onContinuePurchase');
+    this.setState({ loading: true });
+    const order = {
+      ingredients: this.state.ingredients,
+      price: this.state.totalPrice, // <- this should calculated from server
+      customer: {
+        name: 'Luke',
+        address: {
+          street: '1 Test street',
+          postCode: '1234',
+          country: 'New Zealand',
+        },
+        email: 'luke@test.com',
+      },
+      deliverMethod: 'fast',
+    };
+    axios
+      .post('/orders.json', order)
+      .then(response => {
+        console.log(response);
+        this.setState({
+          loading: false,
+          showPurchaseModal: false,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({
+          loading: false,
+          showPurchaseModal: false,
+        });
+      });
+  };
 }

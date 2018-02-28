@@ -6,6 +6,7 @@ export default class OrderSummary extends React.Component {
   componentWillUpdate() {
     console.log('[OrderSummary] componentWillUpdate');
   }
+
   render() {
     const { totalPrice, onCancel, onContinue, ingredients } = this.props;
     const summary = Object.keys(ingredients).map(key => (
