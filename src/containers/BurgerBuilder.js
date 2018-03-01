@@ -5,6 +5,7 @@ import Burger from '../components/Burger/Burger';
 import Modal from '../components/UI/Modal/Modal';
 import OrderSummary from '../components/Burger/OrderSummary';
 import Spinner from '../components/UI/Spinner';
+import errorHandler from './errorHandler';
 
 const INGREDIENT_PRICES = {
   salad: 0.7,
@@ -13,7 +14,7 @@ const INGREDIENT_PRICES = {
   meat: 1.3,
 };
 
-export default class BurgerBuilder extends Component {
+class BurgerBuilder extends Component {
   state = {
     ingredients: {
       salad: 0,
@@ -134,3 +135,5 @@ export default class BurgerBuilder extends Component {
       });
   };
 }
+
+export default errorHandler(BurgerBuilder, axios);
