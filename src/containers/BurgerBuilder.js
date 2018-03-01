@@ -16,30 +16,59 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0,
-    },
+    ingredients: null,
     totalPrice: 4, // base price
     showPurchaseModal: false,
     loading: false,
+    error: null,
   };
+
+  componentDidMount() {
+    axios
+      .get('https://react-burger-aedea.firebaseio.com/ingredients.json')
+      .then(res => {
+        this.setState({
+          ingredients: res.data,
+        });
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message,
+        });
+      });
+  }
 
   // When Modal shouldComponentUpdate returns false, it will stop all children from rerendering.
   // Returning false does not prevent child components from re-rendering when their state changes
   render() {
-    let orderSummary = (
-      <OrderSummary
-        ingredients={this.state.ingredients}
-        onCancel={this._onDismissPurchaseModal}
-        onContinue={this._onContinuePurchase}
-        totalPrice={this.state.totalPrice.toFixed(2)}
-      />
-    );
+    let orderSummary;
+    let burger = this.state.error ? <p>{this.state.error}</p> : <Spinner />;
+
     if (this.state.loading) {
       orderSummary = <Spinner />;
+    }
+    if (this.state.ingredients) {
+      orderSummary = (
+        <OrderSummary
+          ingredients={this.state.ingredients}
+          onCancel={this._onDismissPurchaseModal}
+          onContinue={this._onContinuePurchase}
+          totalPrice={this.state.totalPrice.toFixed(2)}
+        />
+      );
+      burger = (
+        <React.Fragment>
+          <Burger ingredients={this.state.ingredients} />
+          <BuildControls
+            onAdd={this._addIngredientHandler}
+            onRemove={this._removeIngredientHandler}
+            ingredients={this.state.ingredients}
+            totalPrice={this.state.totalPrice.toFixed(2)}
+            disableOrderBtn={this.state.totalPrice === 4}
+            onOrderClick={this._orderHandler}
+          />
+        </React.Fragment>
+      );
     }
 
     return (
@@ -50,15 +79,7 @@ class BurgerBuilder extends Component {
         >
           {orderSummary}
         </Modal>
-        <Burger ingredients={this.state.ingredients} />
-        <BuildControls
-          onAdd={this._addIngredientHandler}
-          onRemove={this._removeIngredientHandler}
-          ingredients={this.state.ingredients}
-          totalPrice={this.state.totalPrice.toFixed(2)}
-          disableOrderBtn={this.state.totalPrice === 4}
-          onOrderClick={this._orderHandler}
-        />
+        {burger}
       </React.Fragment>
     );
   }
@@ -127,11 +148,11 @@ class BurgerBuilder extends Component {
         });
       })
       .catch(err => {
-        console.log(err);
         this.setState({
           loading: false,
           showPurchaseModal: false,
         });
+        throw err;
       });
   };
 }
