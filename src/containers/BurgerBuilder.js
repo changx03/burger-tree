@@ -14,17 +14,19 @@ const INGREDIENT_PRICES = {
   meat: 1.3,
 };
 
+const BASE_PRICE = 4;
+
 class BurgerBuilder extends Component {
   state = {
     ingredients: null,
-    totalPrice: 4, // base price
+    totalPrice: BASE_PRICE, // base price
     showPurchaseModal: false,
     loading: false,
     error: null,
   };
 
-  componentDidMount() {
-    axios
+  async componentDidMount() {
+    await axios
       .get('https://react-burger-aedea.firebaseio.com/ingredients.json')
       .then(res => {
         this.setState({
@@ -36,6 +38,7 @@ class BurgerBuilder extends Component {
           error: err.message,
         });
       });
+    this._computeInitialPrice();
   }
 
   // When Modal shouldComponentUpdate returns false, it will stop all children from rerendering.
@@ -64,7 +67,7 @@ class BurgerBuilder extends Component {
             onRemove={this._removeIngredientHandler}
             ingredients={this.state.ingredients}
             totalPrice={this.state.totalPrice.toFixed(2)}
-            disableOrderBtn={this.state.totalPrice === 4}
+            disableOrderBtn={this.state.totalPrice <= 4}
             onOrderClick={this._orderHandler}
           />
         </React.Fragment>
@@ -83,6 +86,16 @@ class BurgerBuilder extends Component {
       </React.Fragment>
     );
   }
+
+  _computeInitialPrice = () => {
+    if (this.state.ingredients) {
+      const price = Object.keys(this.state.ingredients).reduce(
+        (acc, cur) => acc + INGREDIENT_PRICES[cur] * this.state.ingredients[cur],
+        BASE_PRICE
+      );
+      this.setState({ totalPrice: price });
+    }
+  };
 
   _addIngredientHandler = type => {
     const updatedIngredients = { ...this.state.ingredients };
