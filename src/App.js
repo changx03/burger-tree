@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styledClasses from './App.css';
 
-import Layout from './components/Layout';
 import BurgerBuilder from './containers/BurgerBuilder';
+import Checkout from './containers/Checkout';
+import Layout from './components/Layout';
 
 class App extends Component {
   state = {
@@ -21,6 +22,7 @@ class App extends Component {
         <Layout>
         {this.state.show && <BurgerBuilder />}
         </Layout>
+        <Checkout />
       </div>
     );
   }
