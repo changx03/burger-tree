@@ -19,13 +19,15 @@ const BASE_PRICE = 4;
 class BurgerBuilder extends Component {
   state = {
     ingredients: null,
-    totalPrice: BASE_PRICE, // base price
+    totalPrice: BASE_PRICE,
     showPurchaseModal: false,
     loading: false,
     error: null,
   };
 
   async componentDidMount() {
+    console.log('[BurgerBuilder]', this.props);
+
     await axios
       .get('https://react-burger-aedea.firebaseio.com/ingredients.json')
       .then(res => {
@@ -136,37 +138,45 @@ class BurgerBuilder extends Component {
 
   _onContinuePurchase = () => {
     // alert('_onContinuePurchase');
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice, // <- this should calculated from server
-      customer: {
-        name: 'Luke',
-        address: {
-          street: '1 Test street',
-          postCode: '1234',
-          country: 'New Zealand',
-        },
-        email: 'luke@test.com',
-      },
-      deliverMethod: 'fast',
-    };
-    axios
-      .post('/orders.json', order)
-      .then(response => {
-        console.log(response);
-        this.setState({
-          loading: false,
-          showPurchaseModal: false,
-        });
-      })
-      .catch(err => {
-        this.setState({
-          loading: false,
-          showPurchaseModal: false,
-        });
-        throw err;
-      });
+    // this.setState({ loading: true });
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice, // <- this should calculated from server
+    //   customer: {
+    //     name: 'Luke',
+    //     address: {
+    //       street: '1 Test street',
+    //       postCode: '1234',
+    //       country: 'New Zealand',
+    //     },
+    //     email: 'luke@test.com',
+    //   },
+    //   deliverMethod: 'fast',
+    // };
+    // axios
+    //   .post('/orders.json', order)
+    //   .then(response => {
+    //     console.log(response);
+    //     this.setState({
+    //       loading: false,
+    //       showPurchaseModal: false,
+    //     });
+    //   })
+    //   .catch(err => {
+    //     this.setState({
+    //       loading: false,
+    //       showPurchaseModal: false,
+    //     });
+    //     throw err;
+    //   });
+    const queryIngredients = [];
+    Object.keys(this.state.ingredients).forEach(ingKey => {
+      queryIngredients.push(`${encodeURIComponent(ingKey)}=${encodeURIComponent(this.state.ingredients[ingKey])}`);
+    });
+    this.props.history.push({
+      pathname: '/checkout',
+      search: `?${queryIngredients.join('&')}`,
+    });
   };
 }
 
