@@ -137,45 +137,14 @@ class BurgerBuilder extends Component {
   };
 
   _onContinuePurchase = () => {
-    // alert('_onContinuePurchase');
-    // this.setState({ loading: true });
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice, // <- this should calculated from server
-    //   customer: {
-    //     name: 'Luke',
-    //     address: {
-    //       street: '1 Test street',
-    //       postCode: '1234',
-    //       country: 'New Zealand',
-    //     },
-    //     email: 'luke@test.com',
-    //   },
-    //   deliverMethod: 'fast',
-    // };
-    // axios
-    //   .post('/orders.json', order)
-    //   .then(response => {
-    //     console.log(response);
-    //     this.setState({
-    //       loading: false,
-    //       showPurchaseModal: false,
-    //     });
-    //   })
-    //   .catch(err => {
-    //     this.setState({
-    //       loading: false,
-    //       showPurchaseModal: false,
-    //     });
-    //     throw err;
-    //   });
-    const queryIngredients = [];
+    const queryStr = [];
     Object.keys(this.state.ingredients).forEach(ingKey => {
-      queryIngredients.push(`${encodeURIComponent(ingKey)}=${encodeURIComponent(this.state.ingredients[ingKey])}`);
+      queryStr.push(`${encodeURIComponent(ingKey)}=${encodeURIComponent(this.state.ingredients[ingKey])}`);
+      queryStr.push(`price=${encodeURIComponent(this.state.totalPrice)}`);
     });
     this.props.history.push({
       pathname: '/checkout',
-      search: `?${queryIngredients.join('&')}`,
+      search: `?${queryStr.join('&')}`,
     });
   };
 }
