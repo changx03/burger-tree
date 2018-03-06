@@ -4,8 +4,8 @@ import NaviItem from './NaviItem';
 
 const naviItems = props => (
   <ul className={styleClasses.NaviItems}>
-    <NaviItem link="/" active>Burger builder</NaviItem>
-    <NaviItem link="/">Checkout</NaviItem>
+    <NaviItem link="/">Burger builder</NaviItem>
+    <NaviItem link="/orders">Orders</NaviItem>
   </ul>
 );
 
