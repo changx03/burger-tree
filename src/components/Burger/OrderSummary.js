@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../UI/Button/Button';
+import Button from '../UI/Button';
 
 // This could be a stateless function
 export default class OrderSummary extends React.Component {

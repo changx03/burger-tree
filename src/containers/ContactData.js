@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../axios-orders';
-import Button from '../components/UI/Button/Button';
+import Button from '../components/UI/Button';
 import Spinner from '../components/UI/Spinner';
 import styledClasses from './ContactData.css';
 
@@ -13,7 +13,7 @@ export default class ContactData extends Component {
       postalCode: '',
     },
     loading: false,
-  }
+  };
 
   componentDidMount() {
     console.log('[ContactData]', this.props);
@@ -22,11 +22,49 @@ export default class ContactData extends Component {
   render() {
     let form = (
       <form>
-        <input type="text" name="name" placeholder="Your name" />
-        <input type="email" name="email" placeholder="Your email" />
-        <input type="text" name="street" placeholder="Street" />
-        <input type="text" name="postalCode" placeholder="Postal code" />
-        <Button btnType="Success" onClick={this._onFormBtnClick}>Order</Button>
+        <input
+          type="text"
+          name="name"
+          placeholder="Your name"
+          value={this.state.name}
+          onChange={e => {
+            this.setState({ name: e.target.value });
+          }}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Your email"
+          value={this.state.email}
+          onChange={e => {
+            this.setState({ email: e.target.value });
+          }}
+        />
+        <input
+          type="text"
+          name="street"
+          placeholder="Street"
+          value={this.state.address.street}
+          onChange={e => {
+            const address = { ...this.state.address };
+            address.street = e.target.value;
+            this.setState({ address: address });
+          }}
+        />
+        <input
+          type="text"
+          name="postalCode"
+          placeholder="Postal code"
+          value={this.state.address.postalCode}
+          onChange={e => {
+            const address = { ...this.state.address };
+            address.postalCode = e.target.value;
+            this.setState({ address: address });
+          }}
+        />
+        <Button btnType="Success" onClick={this._onFormBtnClick}>
+          Order
+        </Button>
       </form>
     );
     this.state.loading && (form = <Spinner />);
@@ -46,13 +84,12 @@ export default class ContactData extends Component {
       ingredients: this.props.ingredients,
       price: parseFloat(this.props.price), // <- this should calculated from server
       customer: {
-        name: 'Luke',
+        name: this.state.name,
         address: {
-          street: '1 Test street',
-          postCode: '1234',
-          country: 'New Zealand',
+          street: this.state.address.street,
+          postCode: this.state.address.postalCode,
         },
-        email: 'luke@test.com',
+        email: this.state.email,
       },
       deliverMethod: 'fast',
     };
@@ -67,5 +104,5 @@ export default class ContactData extends Component {
         this.setState({ loading: false });
         throw err;
       });
-  }
+  };
 }

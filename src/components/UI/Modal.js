@@ -1,6 +1,6 @@
 import React from 'react';
 import styleClasses from './Modal.css';
-import Backdrop from '../Backdrop/Backdrop';
+import Backdrop from './Backdrop';
 
 export default class Modal extends React.Component {
   // Don't forget check children (shallow)

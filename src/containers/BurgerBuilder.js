@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from '../axios-orders';
 import BuildControls from '../components/Burger/BuildControls';
 import Burger from '../components/Burger/Burger';
-import Modal from '../components/UI/Modal/Modal';
+import Modal from '../components/UI/Modal';
 import OrderSummary from '../components/Burger/OrderSummary';
 import Spinner from '../components/UI/Spinner';
 import errorHandler from './errorHandler';
