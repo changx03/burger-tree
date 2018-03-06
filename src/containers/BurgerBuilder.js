@@ -14,10 +14,12 @@ const INGREDIENT_PRICES = {
   meat: 1.3,
 };
 
+const BASE_PRICE = 4;
+
 class BurgerBuilder extends Component {
   state = {
     ingredients: null,
-    totalPrice: 4, // base price
+    totalPrice: BASE_PRICE,
     showPurchaseModal: false,
     loading: false,
     error: null,
@@ -36,6 +38,7 @@ class BurgerBuilder extends Component {
           error: err.message,
         });
       });
+    this._computeInitialPrice();
   }
 
   // When Modal shouldComponentUpdate returns false, it will stop all children from rerendering.
@@ -64,7 +67,7 @@ class BurgerBuilder extends Component {
             onRemove={this._removeIngredientHandler}
             ingredients={this.state.ingredients}
             totalPrice={this.state.totalPrice.toFixed(2)}
-            disableOrderBtn={this.state.totalPrice === 4}
+            disableOrderBtn={this.state.totalPrice <= 4}
             onOrderClick={this._orderHandler}
           />
         </React.Fragment>
@@ -83,6 +86,16 @@ class BurgerBuilder extends Component {
       </React.Fragment>
     );
   }
+
+  _computeInitialPrice = () => {
+    if (this.state.ingredients) {
+      const price = Object.keys(this.state.ingredients).reduce(
+        (acc, cur) => acc + INGREDIENT_PRICES[cur] * this.state.ingredients[cur],
+        BASE_PRICE
+      );
+      this.setState({ totalPrice: price });
+    }
+  };
 
   _addIngredientHandler = type => {
     const updatedIngredients = { ...this.state.ingredients };
@@ -123,37 +136,45 @@ class BurgerBuilder extends Component {
 
   _onContinuePurchase = () => {
     // alert('_onContinuePurchase');
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice, // <- this should calculated from server
-      customer: {
-        name: 'Luke',
-        address: {
-          street: '1 Test street',
-          postCode: '1234',
-          country: 'New Zealand',
-        },
-        email: 'luke@test.com',
-      },
-      deliverMethod: 'fast',
-    };
-    axios
-      .post('/orders.json', order)
-      .then(response => {
-        console.log(response);
-        this.setState({
-          loading: false,
-          showPurchaseModal: false,
-        });
-      })
-      .catch(err => {
-        this.setState({
-          loading: false,
-          showPurchaseModal: false,
-        });
-        throw err;
-      });
+    // this.setState({ loading: true });
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice, // <- this should calculated from server
+    //   customer: {
+    //     name: 'Luke',
+    //     address: {
+    //       street: '1 Test street',
+    //       postCode: '1234',
+    //       country: 'New Zealand',
+    //     },
+    //     email: 'luke@test.com',
+    //   },
+    //   deliverMethod: 'fast',
+    // };
+    // axios
+    //   .post('/orders.json', order)
+    //   .then(response => {
+    //     console.log(response);
+    //     this.setState({
+    //       loading: false,
+    //       showPurchaseModal: false,
+    //     });
+    //   })
+    //   .catch(err => {
+    //     this.setState({
+    //       loading: false,
+    //       showPurchaseModal: false,
+    //     });
+    //     throw err;
+    //   });
+    const queryIngredients = [];
+    Object.keys(this.state.ingredients).forEach(ingKey => {
+      queryIngredients.push(`${encodeURIComponent(ingKey)}=${encodeURIComponent(this.state.ingredients[ingKey])}`);
+    });
+    this.props.history.push({
+      pathname: '/checkout',
+      search: `?${queryIngredients.join('&')}`,
+    });
   };
 }
 
