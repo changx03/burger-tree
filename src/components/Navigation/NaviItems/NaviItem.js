@@ -4,7 +4,13 @@ import styleClasses from './NaviItem.css';
 
 const naviItem = props => (
   <li className={styleClasses.NaviItem}>
-    <NavLink to={props.link} activeClassName={styleClasses.active}>{props.children}</NavLink>
+    <NavLink 
+      to={props.link}
+      activeClassName={styleClasses.active}
+      exact
+    >
+        {props.children}
+    </NavLink>
   </li>
 );
 

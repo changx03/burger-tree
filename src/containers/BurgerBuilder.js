@@ -95,6 +95,7 @@ class BurgerBuilder extends Component {
         (acc, cur) => acc + INGREDIENT_PRICES[cur] * this.state.ingredients[cur],
         BASE_PRICE
       );
+      console.log('[BurgerBuilder]:_computeInitialPrice:price:', price);
       this.setState({ totalPrice: price });
     }
   };
@@ -102,8 +103,8 @@ class BurgerBuilder extends Component {
   _addIngredientHandler = type => {
     const updatedIngredients = { ...this.state.ingredients };
     updatedIngredients[type]++;
-    const updatedPrice = this.state.totalPrice + INGREDIENT_PRICES[type];
-    // console.log(updatedIngredients);
+    const updatedPrice = Math.round((this.state.totalPrice + INGREDIENT_PRICES[type]) * 100) / 100;
+    console.log('[BurgerBuilder]:_addIngredientHandler:updatedPrice:', updatedPrice);
     this.setState({
       ingredients: updatedIngredients,
       totalPrice: updatedPrice,

@@ -43,8 +43,8 @@ export default class ContactData extends Component {
 
     this.setState({ loading: true });
     const order = {
-      ingredients: this.state.ingredients,
-      price: this.props.price, // <- this should calculated from server
+      ingredients: this.props.ingredients,
+      price: parseFloat(this.props.price), // <- this should calculated from server
       customer: {
         name: 'Luke',
         address: {
