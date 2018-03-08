@@ -15,6 +15,9 @@ export default class ContactData extends Component {
           placeholder: 'Your name',
         },
         value: '',
+        validation: {
+          required: true,
+        },
       },
       email: {
         elementType: 'input',
@@ -23,6 +26,9 @@ export default class ContactData extends Component {
           placeholder: 'Your email',
         },
         value: '',
+        validation: {
+          required: true,
+        },
       },
       street: {
         elementType: 'input',
@@ -31,6 +37,9 @@ export default class ContactData extends Component {
           placeholder: 'Streen name',
         },
         value: '',
+        validation: {
+          required: true,
+        },
       },
       postalCode: {
         elementType: 'input',
@@ -39,6 +48,9 @@ export default class ContactData extends Component {
           placeholder: 'Postal code',
         },
         value: '',
+        validation: {
+          required: true,
+        },
       },
       deliveryMethod: {
         elementType: 'select',
@@ -48,7 +60,10 @@ export default class ContactData extends Component {
             { value: 'normal', displayValue: 'Normal' },
           ],
         },
-        value: 'normal',
+        value: 'fastest',
+        validation: {
+          required: true,
+        },
       },
     },
     loading: false,
