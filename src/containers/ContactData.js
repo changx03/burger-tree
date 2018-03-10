@@ -67,7 +67,6 @@ export default class ContactData extends Component {
             { value: 'normal', displayValue: 'Normal' },
           ],
         },
-        validation: {},
         value: 'fastest',
         valid: false,
       },
@@ -109,7 +108,7 @@ export default class ContactData extends Component {
   }
 
   checkValidity(value, rules) {
-    if (Object.keys(rules).length === 0) {
+    if (!rules || Object.keys(rules).length === 0) {
       return true;  // empty rules. Don't need validation
     }
     let isValid = true;
@@ -135,6 +134,7 @@ export default class ContactData extends Component {
     this.setState({
       orderForm: newOrderForm,
     });
+    console.log(key, newElement);
   }
 
   _onFormBtnClick = e => {
