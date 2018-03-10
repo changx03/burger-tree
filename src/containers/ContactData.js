@@ -20,6 +20,7 @@ export default class ContactData extends Component {
           minLength: 4,
         },
         valid: false,
+        isTouched: false,
       },
       email: {
         elementType: 'input',
@@ -32,6 +33,7 @@ export default class ContactData extends Component {
           required: true,
         },
         valid: false,
+        isTouched: false,
       },
       street: {
         elementType: 'input',
@@ -44,6 +46,7 @@ export default class ContactData extends Component {
           required: true,
         },
         valid: false,
+        isTouched: false,
       },
       postalCode: {
         elementType: 'input',
@@ -56,8 +59,10 @@ export default class ContactData extends Component {
           required: true,
           minLength: 4,
           maxLength: 6,
+          type: 'number',
         },
         valid: false,
+        isTouched: false,
       },
       deliveryMethod: {
         elementType: 'select',
@@ -68,9 +73,11 @@ export default class ContactData extends Component {
           ],
         },
         value: 'fastest',
-        valid: false,
+        valid: true,
+        isTouched: false,
       },
     },
+    isFormValid: false,
     loading: false,
   };
 
@@ -83,6 +90,8 @@ export default class ContactData extends Component {
           elementType={formElement.elementType}
           elementConfig={formElement.elementConfig}
           value={formElement.value}
+          isValid={formElement.valid}
+          isTouched={formElement.isTouched}
           onChange={e => {
             this._updateInputValue(key, e.target.value);
           }}
@@ -93,7 +102,7 @@ export default class ContactData extends Component {
     let form = (
       <form>
         {formElements}
-        <Button btnType="Success" onClick={this._onFormBtnClick}>
+        <Button btnType="Success" onClick={this._onFormBtnClick} disabled={!this.state.isFormValid}>
           Order
         </Button>
       </form>
@@ -122,6 +131,9 @@ export default class ContactData extends Component {
     if (rules.maxLength) {
       isValid = isValid && (trimmedVal.length <= rules.maxLength);
     }
+    if (rules.type && rules.type === 'number') {
+      isValid = isValid && (!trimmedVal.match(/[^0-9]/g));
+    }
     return isValid;
   }
 
@@ -130,16 +142,23 @@ export default class ContactData extends Component {
     const newElement = { ...this.state.orderForm[key] };
     newElement.value = value;
     newElement.valid = this.checkValidity(value, newElement.validation);
+    newElement.isTouched = true;
     newOrderForm[key] = newElement;
+
+    // update form validation
+    const isFormValid = Object.values(newOrderForm)
+      .map(element => element.valid)
+      .reduce((acc, cur) => (acc && cur));
+    // console.log('[isFormValid]', isFormValid);
+
     this.setState({
       orderForm: newOrderForm,
+      isFormValid: isFormValid,
     });
-    console.log(key, newElement);
+    // console.log(key, newElement);
   }
 
-  _onFormBtnClick = e => {
-    e.preventDefault();
-
+  _onFormBtnClick = () => {
     this.setState({ loading: true });
     const order = {
       ingredients: this.props.ingredients,
