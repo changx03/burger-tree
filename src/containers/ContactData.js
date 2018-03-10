@@ -69,9 +69,9 @@ export default class ContactData extends Component {
     loading: false,
   };
 
-  componentDidMount() {
-    console.log('[ContactData]', this.props);
-  }
+  // componentDidMount() {
+  //   console.log('[ContactData]', this.props);
+  // }
 
   render() {
     const formElements = Object.keys(this.state.orderForm).map(key => {
@@ -135,7 +135,7 @@ export default class ContactData extends Component {
     axios
       .post('/orders.json', order)
       .then(response => {
-        console.log(response);
+        // console.log(response);
         this.setState({ loading: false });
         this.props.history.push('/');
       })

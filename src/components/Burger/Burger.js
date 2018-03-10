@@ -4,7 +4,7 @@ import styledClasses from './Burger.css';
 import BurgerIngredient from './BurgerIngredient';
 
 const burger = props => {
-  console.log('[burger]', props);
+  // console.log('[burger]', props);
 
   const { ingredients } = props;
   const igKeys = Object.keys(ingredients);

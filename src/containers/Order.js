@@ -2,7 +2,7 @@ import React from 'react';
 import styleClasses from './Order.css';
 
 const order = props => {
-  console.log(props);
+  // console.log(props);
   const ingredientsStr = Object.keys(props.ingredients)
     .filter(key => props.ingredients[key] !== 0)
     .map(key => (
