@@ -17,7 +17,9 @@ export default class ContactData extends Component {
         value: '',
         validation: {
           required: true,
+          minLength: 4,
         },
+        valid: false,
       },
       email: {
         elementType: 'input',
@@ -29,6 +31,7 @@ export default class ContactData extends Component {
         validation: {
           required: true,
         },
+        valid: false,
       },
       street: {
         elementType: 'input',
@@ -40,6 +43,7 @@ export default class ContactData extends Component {
         validation: {
           required: true,
         },
+        valid: false,
       },
       postalCode: {
         elementType: 'input',
@@ -50,7 +54,10 @@ export default class ContactData extends Component {
         value: '',
         validation: {
           required: true,
+          minLength: 4,
+          maxLength: 6,
         },
+        valid: false,
       },
       deliveryMethod: {
         elementType: 'select',
@@ -60,18 +67,13 @@ export default class ContactData extends Component {
             { value: 'normal', displayValue: 'Normal' },
           ],
         },
+        validation: {},
         value: 'fastest',
-        validation: {
-          required: true,
-        },
+        valid: false,
       },
     },
     loading: false,
   };
-
-  // componentDidMount() {
-  //   console.log('[ContactData]', this.props);
-  // }
 
   render() {
     const formElements = Object.keys(this.state.orderForm).map(key => {
@@ -106,10 +108,29 @@ export default class ContactData extends Component {
     );
   }
 
+  checkValidity(value, rules) {
+    if (Object.keys(rules).length === 0) {
+      return true;  // empty rules. Don't need validation
+    }
+    let isValid = true;
+    const trimmedVal = value.trim();
+    if (rules.required) {
+      isValid = (trimmedVal !== '');
+    }
+    if (rules.minLength) {
+      isValid = isValid && (trimmedVal.length >= rules.minLength);
+    }
+    if (rules.maxLength) {
+      isValid = isValid && (trimmedVal.length <= rules.maxLength);
+    }
+    return isValid;
+  }
+
   _updateInputValue(key, value) {
     const newOrderForm = { ...this.state.orderForm };
     const newElement = { ...this.state.orderForm[key] };
     newElement.value = value;
+    newElement.valid = this.checkValidity(value, newElement.validation);
     newOrderForm[key] = newElement;
     this.setState({
       orderForm: newOrderForm,
