@@ -102,7 +102,11 @@ export default class ContactData extends Component {
     let form = (
       <form>
         {formElements}
-        <Button btnType="Success" onClick={this._onFormBtnClick} disabled={!this.state.isFormValid}>
+        <Button
+          btnType="Success"
+          onClick={this._onFormBtnClick}
+          disabled={!this.state.isFormValid}
+        >
           Order
         </Button>
       </form>
@@ -118,21 +122,21 @@ export default class ContactData extends Component {
 
   checkValidity(value, rules) {
     if (!rules || Object.keys(rules).length === 0) {
-      return true;  // empty rules. Don't need validation
+      return true; // empty rules. Don't need validation
     }
     let isValid = true;
     const trimmedVal = value.trim();
     if (rules.required) {
-      isValid = (trimmedVal !== '');
+      isValid = trimmedVal !== '';
     }
     if (rules.minLength) {
-      isValid = isValid && (trimmedVal.length >= rules.minLength);
+      isValid = isValid && trimmedVal.length >= rules.minLength;
     }
     if (rules.maxLength) {
-      isValid = isValid && (trimmedVal.length <= rules.maxLength);
+      isValid = isValid && trimmedVal.length <= rules.maxLength;
     }
     if (rules.type && rules.type === 'number') {
-      isValid = isValid && (!trimmedVal.match(/[^0-9]/g));
+      isValid = isValid && !trimmedVal.match(/[^0-9]/g);
     }
     return isValid;
   }
@@ -148,14 +152,12 @@ export default class ContactData extends Component {
     // update form validation
     const isFormValid = Object.values(newOrderForm)
       .map(element => element.valid)
-      .reduce((acc, cur) => (acc && cur));
-    // console.log('[isFormValid]', isFormValid);
+      .reduce((acc, cur) => acc && cur);
 
     this.setState({
       orderForm: newOrderForm,
       isFormValid: isFormValid,
     });
-    // console.log(key, newElement);
   }
 
   _onFormBtnClick = () => {
