@@ -10,7 +10,7 @@ export default class Checkout extends Component {
   };
 
   componentDidMount() {
-    console.log('[Checkout]', this.props);
+    // console.log('[Checkout]', this.props);
 
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};

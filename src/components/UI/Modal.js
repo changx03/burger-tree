@@ -8,9 +8,9 @@ export default class Modal extends React.Component {
     return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
   }
 
-  componentWillUpdate() {
-    console.log('[Modal] componentWillUpdate');
-  }
+  // componentWillUpdate() {
+  //   // console.log('[Modal] componentWillUpdate');
+  // }
 
   render() {
     const { show, children, onDismiss } = this.props;

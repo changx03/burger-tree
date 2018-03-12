@@ -4,7 +4,7 @@ import Button from '../UI/Button';
 // This could be a stateless function
 export default class OrderSummary extends React.Component {
   componentWillUpdate() {
-    console.log('[OrderSummary] componentWillUpdate');
+    // console.log('[OrderSummary] componentWillUpdate');
   }
 
   render() {
