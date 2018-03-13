@@ -5,7 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reducer from './store/reducor';
 
 const logger = store => {
@@ -20,11 +20,10 @@ const logger = store => {
 }
 
 /* eslint-disable no-underscore-dangle */
-const store = createStore(
-  reducer,
-  applyMiddleware(logger),
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
+  applyMiddleware(logger)
+));
 /* eslint-enable */
 
 const app = (
