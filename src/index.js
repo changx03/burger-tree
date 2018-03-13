@@ -5,13 +5,25 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import reducer from './store/reducor';
+
+const logger = store => {
+  return next => {
+    return action => {
+      console.log('[Middleware] Dispatching', action);
+      const result = next(action);
+      console.log('[Middleware] next state', store.getState());
+      return result;
+    }
+  };
+}
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  applyMiddleware(logger),
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 /* eslint-enable */
 
