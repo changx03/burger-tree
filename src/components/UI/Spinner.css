@@ -1,21 +1,14 @@
 .Loader {
+  display: inline-block;
   font-size: 10px;
-  margin: 50px auto;
   text-indent: -9999em;
   width: 11em;
   height: 11em;
   border-radius: 50%;
   background: #bc581e;
-  background: -moz-linear-gradient(left, #bc581e 10%, rgba(0,0,0, 0) 42%);
-  background: -webkit-linear-gradient(left, #bc581e 10%, rgba(0,0,0, 0) 42%);
-  background: -o-linear-gradient(left, #bc581e 10%, rgba(0,0,0, 0) 42%);
-  background: -ms-linear-gradient(left, #bc581e 10%, rgba(0,0,0, 0) 42%);
-  background: linear-gradient(to right, #bc581e 10%, rgba(0,0,0, 0) 42%);
+  background: linear-gradient(to right, #bc581e 10%, rgba(0, 0, 0, 0) 42%);
   position: relative;
-  -webkit-animation: load3 1.4s infinite linear;
   animation: load3 1.4s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
   transform: translateZ(0);
   z-index: 600;
 }
@@ -42,23 +35,17 @@
   bottom: 0;
   right: 0;
 }
-@-webkit-keyframes load3 {
+@keyframes load3 {
   0% {
-    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
-@keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+.Wrapper {
+  width: 13em;
+  height: 13em;
+  margin: 50px auto;
+  overflow: hidden;
 }
