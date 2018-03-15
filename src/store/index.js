@@ -1,5 +1,5 @@
 import burgerBuilder from './reducers/reducerBurgerBuilder';
-import { addIngredient, removeIngredient } from './actions/actionBurgerBuilder';
+import { addIngredient, removeIngredient, initIngredients } from './actions/actionBurgerBuilder';
 
 export { actionTypes } from './actions/actionTypes';
 
@@ -9,5 +9,6 @@ export const reducer = {
 
 export const actions = {
   addIngredient,
+  initIngredients,
   removeIngredient,
 };

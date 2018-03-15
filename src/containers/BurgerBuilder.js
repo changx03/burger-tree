@@ -14,6 +14,10 @@ class BurgerBuilder extends Component {
     showPurchaseModal: false,
   };
 
+  componentDidMount() {
+    this.props.onInitIngredients();
+  }
+
   // When Modal shouldComponentUpdate returns false, it will stop all children from rerendering.
   // Returning false does not prevent child components from re-rendering when their state changes
   render() {
@@ -83,6 +87,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onIngAdded: ingredient => dispatch(actions.addIngredient(ingredient)),
   onIngRemoved: ingredient => dispatch(actions.removeIngredient(ingredient)),
+  onInitIngredients: () => dispatch(actions.initIngredients()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
