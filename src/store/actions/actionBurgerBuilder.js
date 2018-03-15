@@ -30,15 +30,3 @@ export const initIngredients = () => dispatch => {
       dispatch(fetchIngredientsFailed());
     });
 };
-
-// const _computeInitialPrice = () => {
-//   if (this.props.ingredients) {
-//     const price = Object.keys(this.props.ingredients).reduce(
-//       (acc, cur) =>
-//         acc + INGREDIENT_PRICES[cur] * this.props.ingredients[cur],
-//       BASE_PRICE
-//     );
-//     // console.log('[BurgerBuilder]:_computeInitialPrice:price:', price);
-//     this.setState({ totalPrice: price });
-//   }
-// };

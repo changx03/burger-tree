@@ -7,6 +7,13 @@ const initState = {
   error: false,
 };
 
+const computeInitialPrice = ingredients => {
+  return Object.keys(ingredients).reduce(
+    (acc, cur) => acc + INGREDIENT_PRICES[cur] * ingredients[cur],
+    BASE_PRICE
+  );
+};
+
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case actionTypes.ADD_INGREDIENT:
@@ -32,16 +39,18 @@ const reducer = (state = initState, action) => {
         return state;
       }
     case actionTypes.SET_INGREDIENTS:
+      const totalPrice = computeInitialPrice(action.ingredients);
       return {
         ...state,
         ingredients: action.ingredients,
+        totalPrice,
         error: false,
       };
     case actionTypes.FETCH_INGREDIENTS_FAILED:
       return {
         ...state,
         error: true,
-      }
+      };
     default:
       return state;
   }
