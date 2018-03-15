@@ -1,48 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from '../axios-orders';
 import BuildControls from '../components/Burger/BuildControls';
 import Burger from '../components/Burger/Burger';
 import Modal from '../components/UI/Modal';
 import OrderSummary from '../components/Burger/OrderSummary';
 import Spinner from '../components/UI/Spinner';
 import errorHandler from './errorHandler';
-import { actionTypes } from '../store/constants';
+import { actions } from '../store';
+import axios from '../axios-orders';
 
 class BurgerBuilder extends Component {
   state = {
     showPurchaseModal: false,
-    loading: false,
-    error: null,
   };
-
-  // async componentDidMount() {
-  //   // console.log('[BurgerBuilder]', this.props);
-
-  //   await axios
-  //     .get('/ingredients.json')
-  //     .then(res => {
-  //       this.setState({
-  //         ingredients: res.data,
-  //       });
-  //     })
-  //     .catch(err => {
-  //       this.setState({
-  //         error: err.message,
-  //       });
-  //     });
-  //   this._computeInitialPrice();
-  // }
 
   // When Modal shouldComponentUpdate returns false, it will stop all children from rerendering.
   // Returning false does not prevent child components from re-rendering when their state changes
   render() {
     let orderSummary;
-    let burger = this.state.error ? <p>{this.state.error}</p> : <Spinner />;
+    let burger = this.props.error ? <p>{this.props.error}</p> : <Spinner />;
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
     if (this.props.ingredients) {
       orderSummary = (
         <OrderSummary
@@ -80,18 +57,6 @@ class BurgerBuilder extends Component {
     );
   }
 
-  // _computeInitialPrice = () => {
-  //   if (this.props.ingredients) {
-  //     const price = Object.keys(this.props.ingredients).reduce(
-  //       (acc, cur) =>
-  //         acc + INGREDIENT_PRICES[cur] * this.props.ingredients[cur],
-  //       BASE_PRICE
-  //     );
-  //     // console.log('[BurgerBuilder]:_computeInitialPrice:price:', price);
-  //     this.setState({ totalPrice: price });
-  //   }
-  // };
-
   _orderHandler = () => {
     this.setState({
       showPurchaseModal: true,
@@ -112,11 +77,14 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => ({
   ingredients: state.ingredients,
   totalPrice: state.totalPrice,
+  error: state.error,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onIngAdded: ingredient => dispatch({ type: actionTypes.ADD_INGREDIENT, ingredient }),
-  onIngRemoved: ingredient => dispatch({ type: actionTypes.REMOVE_INGREDIENT, ingredient }),
+  onIngAdded: ingredient => dispatch(actions.addIngredient(ingredient)),
+  onIngRemoved: ingredient => dispatch(actions.removeIngredient(ingredient)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(BurgerBuilder, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  errorHandler(BurgerBuilder, axios)
+);

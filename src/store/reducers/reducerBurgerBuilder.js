@@ -1,13 +1,10 @@
-import { actionTypes, BASE_PRICE, INGREDIENT_PRICES } from './constants';
+import { BASE_PRICE, INGREDIENT_PRICES } from '../constants';
+import { actionTypes } from '../actions/actionTypes';
 
 const initState = {
-  ingredients: {
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0,
-  },
+  ingredients: null,
   totalPrice: BASE_PRICE,
+  error: false,
 };
 
 const reducer = (state = initState, action) => {

@@ -6,8 +6,3 @@ export const INGREDIENT_PRICES = {
 };
 
 export const BASE_PRICE = 4;;
-
-export const actionTypes = {
-  ADD_INGREDIENT: 'ADD_INGREDIENT',
-  REMOVE_INGREDIENT: 'REMOVE_INGREDIENT',
-}
