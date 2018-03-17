@@ -6,79 +6,82 @@ import Spinner from '../components/UI/Spinner';
 import Input from '../components/UI/Input';
 import styledClasses from './ContactData.css';
 import withErrorHandler from './errorHandler';
+import { actions } from '../store';
+
+const orderForm = {
+  name: {
+    elementType: 'input',
+    elementConfig: {
+      type: 'text',
+      placeholder: 'Your name',
+    },
+    value: '',
+    validation: {
+      required: true,
+      minLength: 4,
+    },
+    valid: false,
+    isTouched: false,
+  },
+  email: {
+    elementType: 'input',
+    elementConfig: {
+      type: 'email',
+      placeholder: 'Your email',
+    },
+    value: '',
+    validation: {
+      required: true,
+    },
+    valid: false,
+    isTouched: false,
+  },
+  street: {
+    elementType: 'input',
+    elementConfig: {
+      type: 'text',
+      placeholder: 'Streen name',
+    },
+    value: '',
+    validation: {
+      required: true,
+    },
+    valid: false,
+    isTouched: false,
+  },
+  postalCode: {
+    elementType: 'input',
+    elementConfig: {
+      type: 'text',
+      placeholder: 'Postal code',
+    },
+    value: '',
+    validation: {
+      required: true,
+      minLength: 4,
+      maxLength: 6,
+      type: 'number',
+    },
+    valid: false,
+    isTouched: false,
+  },
+  deliveryMethod: {
+    elementType: 'select',
+    elementConfig: {
+      options: [
+        { value: 'fastest', displayValue: 'Fastest' },
+        { value: 'normal', displayValue: 'Normal' },
+      ],
+    },
+    value: 'fastest',
+    valid: true,
+    isTouched: false,
+  },
+};
 
 class ContactData extends Component {
   state = {
-    orderForm: {
-      name: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Your name',
-        },
-        value: '',
-        validation: {
-          required: true,
-          minLength: 4,
-        },
-        valid: false,
-        isTouched: false,
-      },
-      email: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'email',
-          placeholder: 'Your email',
-        },
-        value: '',
-        validation: {
-          required: true,
-        },
-        valid: false,
-        isTouched: false,
-      },
-      street: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Streen name',
-        },
-        value: '',
-        validation: {
-          required: true,
-        },
-        valid: false,
-        isTouched: false,
-      },
-      postalCode: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Postal code',
-        },
-        value: '',
-        validation: {
-          required: true,
-          minLength: 4,
-          maxLength: 6,
-          type: 'number',
-        },
-        valid: false,
-        isTouched: false,
-      },
-      deliveryMethod: {
-        elementType: 'select',
-        elementConfig: {
-          options: [
-            { value: 'fastest', displayValue: 'Fastest' },
-            { value: 'normal', displayValue: 'Normal' },
-          ],
-        },
-        value: 'fastest',
-        valid: true,
-        isTouched: false,
-      },
-    },
+    orderForm,
     isFormValid: false,
     loading: false,
   };
@@ -164,8 +167,7 @@ class ContactData extends Component {
   }
 
   _onFormBtnClick = () => {
-    this.setState({ loading: true });
-    const order = {
+    const orderData = {
       ingredients: this.props.ingredients,
       price: parseFloat(this.props.price), // <- this should calculated from server
       customer: {
@@ -175,8 +177,9 @@ class ContactData extends Component {
         postalCode: this.state.orderForm.postalCode.value,
         deliveryMethod: this.state.orderForm.deliveryMethod.value,
       },
-      deliverMethod: 'fast',
+      deliverMethod: this.state.orderForm.deliveryMethod.value,
     };
+    this.props.onOrderBurger(orderData);
   };
 }
 
@@ -186,7 +189,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onOrderBurger: () => dispatch(),
+  onOrderBurger: orderData => dispatch(actions.purchaseBurgerStart(orderData)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withErrorHandler(ContactData, axios)
+);
