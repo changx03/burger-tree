@@ -5,6 +5,7 @@ import Button from '../components/UI/Button';
 import Spinner from '../components/UI/Spinner';
 import Input from '../components/UI/Input';
 import styledClasses from './ContactData.css';
+import withErrorHandler from './errorHandler';
 
 class ContactData extends Component {
   state = {
@@ -176,17 +177,6 @@ class ContactData extends Component {
       },
       deliverMethod: 'fast',
     };
-    axios
-      .post('/orders.json', order)
-      .then(response => {
-        // console.log(response);
-        this.setState({ loading: false });
-        this.props.history.push('/');
-      })
-      .catch(err => {
-        this.setState({ loading: false });
-        throw err;
-      });
   };
 }
 
@@ -195,4 +185,8 @@ const mapStateToProps = state => ({
   price: state.totalPrice,
 });
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => ({
+  onOrderBurger: () => dispatch(),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData));
