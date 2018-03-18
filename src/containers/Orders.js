@@ -4,17 +4,12 @@ import axios from '../axios-orders';
 import Order from './Order';
 import errorHandler from './errorHandler';
 import Spinner from '../components/UI/Spinner';
+import { actions } from '../store';
 
 class Orders extends Component {
-  // componentDidMount() {
-  //   axios.get('/orders.json').then(res => {
-  //     const orders = Object.keys(res.data).map(key => ({...res.data[key], id: key}));
-  //     // console.log("[Orders]", orders);
-  //     this.setState({ loading: false, orders: orders });
-  //   }).catch(err => {
-  //     this.setState({ loading: false });
-  //   });
-  // }
+  componentDidMount() {
+    this.props.fetchOrders();
+  }
 
   render() {
     return (
@@ -28,8 +23,12 @@ class Orders extends Component {
 }
 
 const mapStateToProps = state => ({
-  orders: state.orders,
-  loading: state.loading,
+  orders: state.order.orders,
+  loading: state.order.loading,
 });
 
-export default connect(mapStateToProps)(errorHandler(Orders, axios));
+const mapDispatchToProps = dispatch => ({
+  fetchOrders: () => dispatch(actions.fetchOrders()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(Orders, axios));

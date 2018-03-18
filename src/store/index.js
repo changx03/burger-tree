@@ -1,7 +1,7 @@
 import burgerBuilder from './reducers/reducerBurgerBuilder';
 import order from './reducers/reducerOrder';
 import { addIngredient, removeIngredient, initIngredients } from './actions/actionBurgerBuilder';
-import { purchaseBurger, purchaseInit } from './actions/actionOrder';
+import { purchaseBurger, purchaseInit, fetchOrders } from './actions/actionOrder';
 
 export { actionTypes } from './actions/actionTypes';
 
@@ -16,4 +16,5 @@ export const actions = {
   removeIngredient,
   purchaseBurger,
   purchaseInit,
+  fetchOrders,
 };
