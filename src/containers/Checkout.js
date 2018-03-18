@@ -21,6 +21,7 @@ class Checkout extends Component {
           path={this.props.match.url + '/contact-data'}
           component={ContactData}
         />
+        {this.props.purchased && <Redirect to='/' />}
       </div>
     ) : (
       <Redirect to="/" />
@@ -31,8 +32,9 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = state => ({
-  ingredients: state.ingredients,
-  totalPrice: state.totalPrice,
+  ingredients: state.burgerBuilder.ingredients,
+  totalPrice: state.burgerBuilder.totalPrice,
+  purchased: state.order.purchased,
 });
 
 export default connect(mapStateToProps)(Checkout);

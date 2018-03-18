@@ -86,7 +86,6 @@ class ContactData extends Component {
   };
 
   render() {
-    console.log('[ContactData]', this.props);
     const formElements = Object.keys(this.state.orderForm).map(key => {
       const formElement = this.state.orderForm[key];
       return (
@@ -183,13 +182,13 @@ class ContactData extends Component {
 }
 
 const mapStateToProps = state => ({
-  ingredients: state.ingredients,
-  price: state.totalPrice,
-  loading: state.loading,
+  ingredients: state.burgerBuilder.ingredients,
+  price: state.burgerBuilder.totalPrice,
+  loading: state.order.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onOrderBurger: orderData => dispatch(actions.purchaseBurgerStart(orderData)),
+  onOrderBurger: orderData => dispatch(actions.purchaseBurger(orderData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
