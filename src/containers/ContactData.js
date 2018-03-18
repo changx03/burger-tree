@@ -83,7 +83,6 @@ class ContactData extends Component {
   state = {
     orderForm,
     isFormValid: false,
-    loading: false,
   };
 
   render() {
@@ -117,7 +116,7 @@ class ContactData extends Component {
         </Button>
       </form>
     );
-    this.state.loading && (form = <Spinner />);
+    this.props.loading && (form = <Spinner />);
     return (
       <div className={styledClasses.ContactData}>
         <h4>Enter your contact</h4>
@@ -186,6 +185,7 @@ class ContactData extends Component {
 const mapStateToProps = state => ({
   ingredients: state.ingredients,
   price: state.totalPrice,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
