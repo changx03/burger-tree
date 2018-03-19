@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button, Input } from '../components/UI';
 import styleClasses from './Auth.css';
+import { actions } from '../store';
+import errorHandler from './errorHandler';
+import axios from '../axios-orders';
 
 const loginForm = {
   email: {
@@ -20,7 +24,7 @@ const loginForm = {
   password: {
     elementType: 'input',
     elementConfig: {
-      type: 'text',
+      type: 'password',
       placeholder: 'Password',
     },
     value: '',
@@ -74,7 +78,9 @@ class Auth extends Component {
   }
 
   _onFormBtnClick = () => {
-    console.log('onLoginButtonClick');
+    const email = this.state.loginForm.email.value;
+    const password = this.state.loginForm.password.value;
+    this.props.onAuth(email, password);
   };
 
   _checkValidity(value, rules) {
@@ -122,4 +128,8 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+const mapDispatchToProps = dispatch => ({
+  onAuth: (email, password) => dispatch(actions.auth(email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(errorHandler(Auth, axios));

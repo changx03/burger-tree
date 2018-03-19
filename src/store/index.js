@@ -2,6 +2,7 @@ import burgerBuilder from './reducers/reducerBurgerBuilder';
 import order from './reducers/reducerOrder';
 import { addIngredient, removeIngredient, initIngredients } from './actions/actionBurgerBuilder';
 import { purchaseBurger, purchaseInit, fetchOrders } from './actions/actionOrder';
+import { auth } from './actions/actionAuth';
 
 export { actionTypes } from './actions/actionTypes';
 
@@ -17,4 +18,5 @@ export const actions = {
   purchaseBurger,
   purchaseInit,
   fetchOrders,
+  auth,
 };
