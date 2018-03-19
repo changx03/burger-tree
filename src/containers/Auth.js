@@ -7,7 +7,7 @@ const loginForm = {
     elementType: 'input',
     elementConfig: {
       type: 'email',
-      placeholder: 'Choose your login email',
+      placeholder: 'Login email',
     },
     value: '',
     validation: {
@@ -31,13 +31,13 @@ const loginForm = {
     valid: false,
     isTouched: false,
   },
-}
+};
 
 class Auth extends Component {
   state = {
     loginForm,
-    isValid: false,
-  }
+    isFormValid: false,
+  };
 
   render() {
     const formElements = Object.keys(this.state.loginForm).map(key => {
@@ -58,23 +58,67 @@ class Auth extends Component {
     });
 
     return (
-    <div className={styleClasses.Auth}>
-      <form>
-        {formElements}
-        <Button
-          btnType="Success"
-          onClick={this._onFormBtnClick}
-          disabled={!this.state.isFormValid}
-        >
-          Login
-        </Button>
-      </form>
-    </div>
+      <div className={styleClasses.Auth}>
+        <form>
+          {formElements}
+          <Button
+            btnType="Success"
+            onClick={this._onFormBtnClick}
+            disabled={!this.state.isFormValid}
+          >
+            Login
+          </Button>
+        </form>
+      </div>
     );
   }
 
   _onFormBtnClick = () => {
     console.log('onLoginButtonClick');
+  };
+
+  _checkValidity(value, rules) {
+    if (!rules || Object.keys(rules).length === 0) {
+      return true; // empty rules. Don't need validation
+    }
+    let isValid = true;
+    const trimmedVal = value.trim();
+    if (rules.required) {
+      isValid = trimmedVal !== '';
+    }
+    if (rules.minLength) {
+      isValid = isValid && trimmedVal.length >= rules.minLength;
+    }
+    if (rules.maxLength) {
+      isValid = isValid && trimmedVal.length <= rules.maxLength;
+    }
+    if (rules.type && rules.type === 'number') {
+      isValid = isValid && !trimmedVal.match(/[^0-9]/g);
+    }
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = isValid && pattern.test(trimmedVal);
+    }
+    return isValid;
+  }
+
+  _updateInputValue(key, value) {
+    const newLoginForm = { ...this.state.loginForm };
+    const newElement = { ...this.state.loginForm[key] };
+    newElement.value = value;
+    newElement.valid = this._checkValidity(value, newElement.validation);
+    newElement.isTouched = true;
+    newLoginForm[key] = newElement;
+
+    // update form validation
+    const isFormValid = Object.values(newLoginForm)
+      .map(element => element.valid)
+      .reduce((acc, cur) => acc && cur);
+
+    this.setState({
+      loginForm: newLoginForm,
+      isFormValid: isFormValid,
+    });
   }
 }
 

@@ -122,7 +122,7 @@ class ContactData extends Component {
     );
   }
 
-  checkValidity(value, rules) {
+  _checkValidity(value, rules) {
     if (!rules || Object.keys(rules).length === 0) {
       return true; // empty rules. Don't need validation
     }
@@ -140,6 +140,10 @@ class ContactData extends Component {
     if (rules.type && rules.type === 'number') {
       isValid = isValid && !trimmedVal.match(/[^0-9]/g);
     }
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = isValid && pattern.test(trimmedVal)
+    }
     return isValid;
   }
 
@@ -147,7 +151,7 @@ class ContactData extends Component {
     const newOrderForm = { ...this.state.orderForm };
     const newElement = { ...this.state.orderForm[key] };
     newElement.value = value;
-    newElement.valid = this.checkValidity(value, newElement.validation);
+    newElement.valid = this._checkValidity(value, newElement.validation);
     newElement.isTouched = true;
     newOrderForm[key] = newElement;
 
