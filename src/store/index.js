@@ -3,6 +3,7 @@ import order from './reducers/reducerOrder';
 import { addIngredient, removeIngredient, initIngredients } from './actions/actionBurgerBuilder';
 import { purchaseBurger, purchaseInit, fetchOrders } from './actions/actionOrder';
 import { auth } from './actions/actionAuth';
+export { BASE_PRICE, INGREDIENT_PRICES, authMethod } from './constants';
 
 export { actionTypes } from './actions/actionTypes';
 

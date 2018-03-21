@@ -5,4 +5,9 @@ export const INGREDIENT_PRICES = {
   meat: 1.3,
 };
 
+export const authMethod = {
+  SIGNUP: 'SIGN UP',
+  LOGIN: 'LOG IN',
+}
+
 export const BASE_PRICE = 4;;

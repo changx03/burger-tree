@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Input } from '../components/UI';
 import styleClasses from './Auth.css';
-import { actions } from '../store';
+import { actions, authMethod } from '../store';
 import errorHandler from './errorHandler';
 import axios from 'axios';
 
@@ -41,6 +41,7 @@ class Auth extends Component {
   state = {
     loginForm,
     isFormValid: false,
+    isSignup: true,
   };
 
   render() {
@@ -61,6 +62,7 @@ class Auth extends Component {
       );
     });
 
+    const btnStr = this.state.isSignup ? authMethod.LOGIN: authMethod.SIGNUP;
     return (
       <div className={styleClasses.Auth}>
         <form>
@@ -70,9 +72,12 @@ class Auth extends Component {
             onClick={this._onFormBtnClick}
             disabled={!this.state.isFormValid}
           >
-            Login
+            {this.state.isSignup ? authMethod.SIGNUP : authMethod.LOGIN}
           </Button>
         </form>
+        <Button btnType="Danger" onClick={this._switchAuthMode}>
+          Switch to {btnStr}
+        </Button>
       </div>
     );
   }
@@ -80,10 +85,11 @@ class Auth extends Component {
   _onFormBtnClick = () => {
     const email = this.state.loginForm.email.value;
     const password = this.state.loginForm.password.value;
-    this.props.onAuth(email, password);
+    const method = this.state.isSignup ? authMethod.SIGNUP : authMethod.LOGIN;
+    this.props.onAuth(email, password, method);
   };
 
-  _checkValidity(value, rules) {
+  _checkValidity = (value, rules) => {
     if (!rules || Object.keys(rules).length === 0) {
       return true; // empty rules. Don't need validation
     }
@@ -106,9 +112,9 @@ class Auth extends Component {
       isValid = isValid && pattern.test(trimmedVal);
     }
     return isValid;
-  }
+  };
 
-  _updateInputValue(key, value) {
+  _updateInputValue = (key, value) => {
     const newLoginForm = { ...this.state.loginForm };
     const newElement = { ...this.state.loginForm[key] };
     newElement.value = value;
@@ -125,11 +131,15 @@ class Auth extends Component {
       loginForm: newLoginForm,
       isFormValid: isFormValid,
     });
-  }
+  };
+
+  _switchAuthMode = () => {
+    this.setState(prevState => ({ isSignup: !prevState.isSignup }));
+  };
 }
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: (email, password) => dispatch(actions.auth(email, password)),
+  onAuth: (email, password, method) => dispatch(actions.auth(email, password, method)),
 });
 
 export default connect(null, mapDispatchToProps)(errorHandler(Auth, axios));

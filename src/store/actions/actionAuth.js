@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { actionTypes } from './actionTypes';
+import { authMethod } from '../constants';
 
 const authStart = () => ({
   type: actionTypes.AUTH_START,
@@ -17,7 +18,7 @@ const authFail = error => ({
   error,
 });
 
-export const auth = (email, password) => {
+export const auth = (email, password, method) => {
   return dispatch => {
     dispatch(authStart());
     const authData = {
@@ -25,7 +26,11 @@ export const auth = (email, password) => {
       password,
       returnSecureToken: true,
     }
-    axios.post(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${process.env.REACT_APP_API_KEY}`, authData)
+    const url = method === authMethod.SIGNUP ?
+      `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${process.env.REACT_APP_API_KEY}`
+      : `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${process.env.REACT_APP_API_KEY}`;
+
+    axios.post(url, authData)
       .then(response => {
         console.log(response);
         dispatch(authSuccess(response.data));
