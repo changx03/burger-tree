@@ -8,6 +8,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { reducer } from './store';
 import './index.css';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Custom middleware
 // const logger = store => {

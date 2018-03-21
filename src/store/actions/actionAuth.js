@@ -25,7 +25,7 @@ export const auth = (email, password) => {
       password,
       returnSecureToken: true,
     }
-    axios.post(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${key}`, authData)
+    axios.post(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${process.env.API_KET}`, authData)
       .then(response => {
         console.log(response);
         dispatch(authSuccess(response.data));
