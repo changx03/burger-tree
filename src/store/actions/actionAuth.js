@@ -32,7 +32,7 @@ export const auth = (email, password) => {
       })
       .catch(err => {
         console.error(err);
-        dispatch(authFail());
+        dispatch(authFail(err));
       });
   }
 };

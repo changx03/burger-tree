@@ -4,7 +4,7 @@ import { Button, Input } from '../components/UI';
 import styleClasses from './Auth.css';
 import { actions } from '../store';
 import errorHandler from './errorHandler';
-import axios from '../axios-orders';
+import axios from 'axios';
 
 const loginForm = {
   email: {
