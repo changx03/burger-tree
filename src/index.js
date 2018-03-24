@@ -23,6 +23,7 @@ import { reducer } from './store';
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
+  auth: reducer.auth,
   burgerBuilder: reducer.burgerBuilder,
   order: reducer.order,
 });

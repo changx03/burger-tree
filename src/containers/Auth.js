@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Input } from '../components/UI';
+import { Button, Input, Spinner } from '../components/UI';
 import styleClasses from './Auth.css';
 import { actions, authMethod } from '../store';
-import errorHandler from './errorHandler';
-import axios from 'axios';
+// import errorHandler from './errorHandler';
+// import axios from 'axios';
 
 const loginForm = {
   email: {
@@ -62,19 +62,30 @@ class Auth extends Component {
       );
     });
 
-    const btnStr = this.state.isSignup ? authMethod.LOGIN: authMethod.SIGNUP;
+    const btnStr = this.state.isSignup ? authMethod.LOGIN : authMethod.SIGNUP;
+    const form = this.props.isLoading ? (
+      <Spinner />
+    ) : (
+      <form>
+        {formElements}
+        <Button
+          btnType="Success"
+          onClick={this._onFormBtnClick}
+          disabled={!this.state.isFormValid}
+        >
+          {this.state.isSignup ? authMethod.SIGNUP : authMethod.LOGIN}
+        </Button>
+      </form>
+    );
+    let errorMsg;
+    if (this.props.error) {
+      errorMsg = <p>{this.props.error.message}</p>;
+    }
+
     return (
       <div className={styleClasses.Auth}>
-        <form>
-          {formElements}
-          <Button
-            btnType="Success"
-            onClick={this._onFormBtnClick}
-            disabled={!this.state.isFormValid}
-          >
-            {this.state.isSignup ? authMethod.SIGNUP : authMethod.LOGIN}
-          </Button>
-        </form>
+        {errorMsg}
+        {form}
         <Button btnType="Danger" onClick={this._switchAuthMode}>
           Switch to {btnStr}
         </Button>
@@ -138,8 +149,17 @@ class Auth extends Component {
   };
 }
 
-const mapDispatchToProps = dispatch => ({
-  onAuth: (email, password, method) => dispatch(actions.auth(email, password, method)),
+const mapStateToProps = state => ({
+  isLoading: state.auth.loading,
+  error: state.auth.error,
 });
 
-export default connect(null, mapDispatchToProps)(errorHandler(Auth, axios));
+const mapDispatchToProps = dispatch => ({
+  onAuth: (email, password, method) =>
+    dispatch(actions.auth(email, password, method)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  // errorHandler(Auth, axios)
+  Auth
+);

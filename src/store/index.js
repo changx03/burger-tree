@@ -1,3 +1,4 @@
+import reducerAuth from './reducers/reducerAuth';
 import burgerBuilder from './reducers/reducerBurgerBuilder';
 import order from './reducers/reducerOrder';
 import { addIngredient, removeIngredient, initIngredients } from './actions/actionBurgerBuilder';
@@ -8,6 +9,7 @@ export { BASE_PRICE, INGREDIENT_PRICES, authMethod } from './constants';
 export { actionTypes } from './actions/actionTypes';
 
 export const reducer = {
+  auth: reducerAuth,
   burgerBuilder,
   order,
 };
