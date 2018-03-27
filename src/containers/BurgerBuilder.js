@@ -14,7 +14,9 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    this.props.onInitIngredients();
+    if (!this.props.isBuilding) { 
+      this.props.onInitIngredients();
+    }
   }
 
   // When Modal shouldComponentUpdate returns false, it will stop all children from rerendering.
@@ -42,6 +44,7 @@ class BurgerBuilder extends Component {
             totalPrice={this.props.totalPrice.toFixed(2)}
             disableOrderBtn={this.props.totalPrice <= 4}
             onOrderClick={this._orderHandler}
+            isAuth={this.props.isAuth}
           />
         </React.Fragment>
       );
@@ -61,9 +64,14 @@ class BurgerBuilder extends Component {
   }
 
   _orderHandler = () => {
-    this.setState({
-      showPurchaseModal: true,
-    });
+    if (this.props.isAuth) {
+      this.setState({
+        showPurchaseModal: true,
+      });
+    } else {
+      this.props.onSetAuthRedirectPath('/checkout');
+      this.props.history.push('/login');
+    }
   };
 
   _onDismissPurchaseModal = () => {
@@ -82,6 +90,8 @@ const mapStateToProps = state => ({
   ingredients: state.burgerBuilder.ingredients,
   totalPrice: state.burgerBuilder.totalPrice,
   error: state.burgerBuilder.error,
+  isAuth: !!state.auth.token,
+  isBuilding: state.burgerBuilder.isBuilding,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -89,6 +99,7 @@ const mapDispatchToProps = dispatch => ({
   onIngRemoved: ingredient => dispatch(actions.removeIngredient(ingredient)),
   onInitIngredients: () => dispatch(actions.initIngredients()),
   onInitPurchase: () => dispatch(actions.purchaseInit()),
+  onSetAuthRedirectPath: path => dispatch(actions.setAuthRedirect(path)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

@@ -6,6 +6,7 @@ const initState = {
   ingredients: null,
   totalPrice: BASE_PRICE,
   error: false,
+  isBuilding: false,
 };
 
 const computeInitialPrice = ingredients => {
@@ -29,6 +30,7 @@ const updateIngredient = (state, action, type = 'add') => {
   const updatedState = {
     ingredients: updatedIngredients,
     totalPrice,
+    isBuilding: true,
   };
   return updateObject(state, updatedState);
 };
@@ -39,6 +41,7 @@ const setIngredient = (state, action) => {
     ingredients: action.ingredients,
     totalPrice,
     error: false,
+    isBuilding: false,
   };
   return updateObject(state, updatedState);
 };

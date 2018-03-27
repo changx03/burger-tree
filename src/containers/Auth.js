@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Button, Input, Spinner } from '../components/UI';
 import styleClasses from './Auth.css';
 import { actions, authMethod } from '../store';
@@ -44,7 +45,17 @@ class Auth extends Component {
     isSignup: true,
   };
 
+  componentDidMount() {
+    if (!this.props.isBuilding && this.props.authRedirectPath !== '/') {
+      this.props.resetAuthRedirectPath();
+    }
+  }
+
   render() {
+    if (this.props.isAuth) {
+      return <Redirect to={this.props.authRedirectPath} />;
+    }
+
     const formElements = Object.keys(this.state.loginForm).map(key => {
       const formElement = this.state.loginForm[key];
       return (
@@ -152,11 +163,15 @@ class Auth extends Component {
 const mapStateToProps = state => ({
   isLoading: state.auth.loading,
   error: state.auth.error,
+  isAuth: !!state.auth.token,
+  isBuilding: state.burgerBuilder.isBuilding,
+  authRedirectPath: state.auth.authRedirectPath,
 });
 
 const mapDispatchToProps = dispatch => ({
   onAuth: (email, password, method) =>
     dispatch(actions.auth(email, password, method)),
+  resetAuthRedirectPath: () => dispatch(actions.setAuthRedirect('/')),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
