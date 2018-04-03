@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { actionTypes } from './actionTypes';
-import { authMethod } from '../constants';
+import { authMethod, localStorageKeys } from '../constants';
 
 const authStart = () => ({
   type: actionTypes.AUTH_START,
@@ -19,9 +19,13 @@ const authFail = error => ({
   error,
 });
 
-export const logout = () => ({
+export const logout = () => {
+  localStorage.removeItem(localStorageKeys.TOKEN);
+  localStorage.removeItem(localStorageKeys.EXPIRATION_DATE);
+  return {
   type: actionTypes.AUTH_LOGOUT,
-});
+  };
+};
 
 const checkAuthTimeout = expiresTime => {
   return dispatch => {
@@ -45,6 +49,9 @@ export const auth = (email, password, method) => {
 
     axios.post(url, authData)
       .then(response => {
+        localStorage.setItem(localStorageKeys.TOKEN, response.data.idToken);
+        const expireDate = new Date(new Date().getTime() + response.data.expiresIn * 1e3);
+        localStorage.setItem(localStorageKeys.EXPIRATION_DATE, expireDate);
         dispatch(authSuccess(response.data));
         dispatch(checkAuthTimeout(response.data.expiresIn));
       })
