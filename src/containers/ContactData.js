@@ -176,6 +176,7 @@ class ContactData extends Component {
         street: this.state.orderForm.street.value,
         postalCode: this.state.orderForm.postalCode.value,
         deliveryMethod: this.state.orderForm.deliveryMethod.value,
+        userId: this.props.userId,
       },
       deliverMethod: this.state.orderForm.deliveryMethod.value,
     };
@@ -187,7 +188,8 @@ const mapStateToProps = state => ({
   ingredients: state.burgerBuilder.ingredients,
   price: state.burgerBuilder.totalPrice,
   loading: state.order.loading,
-  token: state.auth.token
+  token: state.auth.token,
+  userId: state.auth.userId,
 });
 
 const mapDispatchToProps = dispatch => ({
