@@ -11,7 +11,7 @@ import {
   purchaseInit,
   fetchOrders,
 } from './actions/actionOrder';
-import { auth, logout, setAuthRedirect } from './actions/actionAuth';
+import { auth, logout, setAuthRedirect, authCheckState } from './actions/actionAuth';
 export { BASE_PRICE, INGREDIENT_PRICES, authMethod } from './constants';
 
 export { actionTypes } from './actions/actionTypes';
@@ -32,4 +32,5 @@ export const actions = {
   auth,
   logout,
   setAuthRedirect,
+  authCheckState,
 };

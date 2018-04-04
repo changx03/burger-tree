@@ -15,4 +15,5 @@ export const BASE_PRICE = 4;;
 export const localStorageKeys = {
   TOKEN: 'TOKEN',
   EXPIRATION_DATE: 'EXPIRATION_DATE',
+  USER_ID: 'USERID',
 }
