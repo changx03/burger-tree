@@ -4,8 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { Button, Input, Spinner } from '../components/UI';
 import styleClasses from './Auth.css';
 import { actions, authMethod } from '../store';
-// import errorHandler from './errorHandler';
-// import axios from 'axios';
+import { validate } from '../shared/validate';
 
 const loginForm = {
   email: {
@@ -111,36 +110,13 @@ class Auth extends Component {
     this.props.onAuth(email, password, method);
   };
 
-  _checkValidity = (value, rules) => {
-    if (!rules || Object.keys(rules).length === 0) {
-      return true; // empty rules. Don't need validation
-    }
-    let isValid = true;
-    const trimmedVal = value.trim();
-    if (rules.required) {
-      isValid = trimmedVal !== '';
-    }
-    if (rules.minLength) {
-      isValid = isValid && trimmedVal.length >= rules.minLength;
-    }
-    if (rules.maxLength) {
-      isValid = isValid && trimmedVal.length <= rules.maxLength;
-    }
-    if (rules.type && rules.type === 'number') {
-      isValid = isValid && !trimmedVal.match(/[^0-9]/g);
-    }
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = isValid && pattern.test(trimmedVal);
-    }
-    return isValid;
-  };
+
 
   _updateInputValue = (key, value) => {
     const newLoginForm = { ...this.state.loginForm };
     const newElement = { ...this.state.loginForm[key] };
     newElement.value = value;
-    newElement.valid = this._checkValidity(value, newElement.validation);
+    newElement.valid = validate(value, newElement.validation);
     newElement.isTouched = true;
     newLoginForm[key] = newElement;
 
