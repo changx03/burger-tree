@@ -170,8 +170,8 @@ class ContactData extends Component {
     const orderData = {
       ingredients: this.props.ingredients,
       price: parseFloat(this.props.price), // <- this should calculated from server
-      userId: this.props.userId,
       customer: {
+        userId: this.props.userId,
         name: this.state.orderForm.name.value,
         email: this.state.orderForm.email.value,
         street: this.state.orderForm.street.value,
