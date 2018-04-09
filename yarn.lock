@@ -4165,12 +4165,21 @@ jest-runtime@^22.4.3:
     convert-source-map "^1.4.0"
     exit "^0.1.2"
     graceful-fs "^4.1.11"
+<<<<<<< HEAD
     jest-config "^22.4.3"
     jest-haste-map "^22.4.3"
     jest-regex-util "^22.4.3"
     jest-resolve "^22.4.3"
     jest-util "^22.4.3"
     jest-validate "^22.4.3"
+=======
+    jest-config "^22.4.2"
+    jest-haste-map "^22.4.2"
+    jest-regex-util "^22.1.0"
+    jest-resolve "^22.4.2"
+    jest-util "^22.4.1"
+    jest-validate "^22.4.2"
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
     json-stable-stringify "^1.0.1"
     micromatch "^2.3.11"
     realpath-native "^1.0.0"
@@ -4178,6 +4187,7 @@ jest-runtime@^22.4.3:
     strip-bom "3.0.0"
     write-file-atomic "^2.1.0"
     yargs "^10.0.3"
+<<<<<<< HEAD
 
 jest-serializer@^22.4.3:
   version "22.4.3"
@@ -4197,11 +4207,33 @@ jest-snapshot@^22.4.3:
 jest-util@^22.4.3:
   version "22.4.3"
   resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-22.4.3.tgz#c70fec8eec487c37b10b0809dc064a7ecf6aafac"
+=======
+
+jest-serializer@^22.4.0:
+  version "22.4.0"
+  resolved "https://registry.yarnpkg.com/jest-serializer/-/jest-serializer-22.4.0.tgz#b5d145b98c4b0d2c20ab686609adbb81fe23b566"
+
+jest-snapshot@^22.4.0:
+  version "22.4.0"
+  resolved "https://registry.yarnpkg.com/jest-snapshot/-/jest-snapshot-22.4.0.tgz#03d3ce63f8fa7352388afc6a3c8b5ccc3a180ed7"
+  dependencies:
+    chalk "^2.0.1"
+    jest-diff "^22.4.0"
+    jest-matcher-utils "^22.4.0"
+    mkdirp "^0.5.1"
+    natural-compare "^1.4.0"
+    pretty-format "^22.4.0"
+
+jest-util@^22.4.1:
+  version "22.4.1"
+  resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-22.4.1.tgz#dd17c3bdb067f8e90591563ec0c42bf847dc249f"
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
   dependencies:
     callsites "^2.0.0"
     chalk "^2.0.1"
     graceful-fs "^4.1.11"
     is-ci "^1.0.10"
+<<<<<<< HEAD
     jest-message-util "^22.4.3"
     mkdirp "^0.5.1"
     source-map "^0.6.0"
@@ -4228,6 +4260,34 @@ jest@^22.4.3:
   dependencies:
     import-local "^1.0.0"
     jest-cli "^22.4.3"
+=======
+    jest-message-util "^22.4.0"
+    mkdirp "^0.5.1"
+    source-map "^0.6.0"
+
+jest-validate@^22.4.2:
+  version "22.4.2"
+  resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-22.4.2.tgz#e789a4e056173bf97fe797a2df2d52105c57d4f4"
+  dependencies:
+    chalk "^2.0.1"
+    jest-config "^22.4.2"
+    jest-get-type "^22.1.0"
+    leven "^2.1.0"
+    pretty-format "^22.4.0"
+
+jest-worker@^22.2.2:
+  version "22.2.2"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-22.2.2.tgz#c1f5dc39976884b81f68ec50cb8532b2cbab3390"
+  dependencies:
+    merge-stream "^1.0.1"
+
+jest@^22.4.2:
+  version "22.4.2"
+  resolved "https://registry.yarnpkg.com/jest/-/jest-22.4.2.tgz#34012834a49bf1bdd3bc783850ab44e4499afc20"
+  dependencies:
+    import-local "^1.0.0"
+    jest-cli "^22.4.2"
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
 
 js-base64@^2.1.9:
   version "2.4.3"
@@ -4525,7 +4585,11 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
+<<<<<<< HEAD
 "lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0:
+=======
+"lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0:
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
@@ -4985,8 +5049,13 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
 nwmatcher@^1.4.3:
+<<<<<<< HEAD
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/nwmatcher/-/nwmatcher-1.4.4.tgz#2285631f34a95f0d0395cd900c96ed39b58f346e"
+=======
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/nwmatcher/-/nwmatcher-1.4.3.tgz#64348e3b3d80f035b40ac11563d278f8b72db89c"
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
 
 oauth-sign@~0.8.1, oauth-sign@~0.8.2:
   version "0.8.2"
@@ -5652,9 +5721,15 @@ pretty-error@^2.0.2:
     renderkid "^2.0.1"
     utila "~0.4"
 
+<<<<<<< HEAD
 pretty-format@^22.4.3:
   version "22.4.3"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-22.4.3.tgz#f873d780839a9c02e9664c8a082e9ee79eaac16f"
+=======
+pretty-format@^22.4.0:
+  version "22.4.0"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-22.4.0.tgz#237b1f7e1c50ed03bc65c03ccc29d7c8bb7beb94"
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
   dependencies:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
@@ -6291,13 +6366,22 @@ safe-regex@^1.1.0:
     ret "~0.1.10"
 
 sane@^2.0.0:
+<<<<<<< HEAD
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/sane/-/sane-2.5.0.tgz#6359cd676f5efd9988b264d8ce3b827dd6b27bec"
+=======
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/sane/-/sane-2.4.1.tgz#29f991208cf28636720efdc584293e7fd66663a5"
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
   dependencies:
     anymatch "^2.0.0"
     exec-sh "^0.2.0"
     fb-watchman "^2.0.0"
+<<<<<<< HEAD
     micromatch "^3.1.4"
+=======
+    minimatch "^3.0.2"
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
     minimist "^1.1.1"
     walker "~1.0.5"
     watch "~0.18.0"
@@ -6556,8 +6640,13 @@ source-map-support@^0.4.15:
     source-map "^0.5.6"
 
 source-map-support@^0.5.0:
+<<<<<<< HEAD
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.4.tgz#54456efa89caa9270af7cd624cc2f123e51fbae8"
+=======
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.3.tgz#2b3d5fff298cfa4d1afd7d4352d569e9a0158e76"
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
   dependencies:
     source-map "^0.6.0"
 
@@ -6835,10 +6924,13 @@ sw-toolbox@^3.4.0:
     path-to-regexp "^1.0.1"
     serviceworker-cache-polyfill "^4.0.0"
 
+<<<<<<< HEAD
 symbol-observable@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 
+=======
+>>>>>>> db26564d815e9299598cc586b4a50a511ea7cb44
 symbol-tree@^3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
