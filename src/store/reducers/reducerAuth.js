@@ -1,7 +1,7 @@
 import { actionTypes } from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
-const initState = {
+export const initState = {
   token: null,
   userId: null,
   error: null,
