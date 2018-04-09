@@ -8,7 +8,7 @@ import errorHandler from './errorHandler';
 import { actions } from '../store';
 import axios from '../axios-orders';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     showPurchaseModal: false,
   };
